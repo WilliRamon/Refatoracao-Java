@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import br.com.alura.client.ClientHttpConfiguration;
+import br.com.alura.domain.Pet;
 
 public class PetService {
 	
@@ -36,12 +37,14 @@ public class PetService {
         System.out.println("Pets cadastrados:");
         for (JsonElement element : jsonArray) {
             JsonObject jsonObject = element.getAsJsonObject();
-            long id = jsonObject.get("id").getAsLong();
-            String tipo = jsonObject.get("tipo").getAsString();
-            String nome = jsonObject.get("nome").getAsString();
-            String raca = jsonObject.get("raca").getAsString();
-            int idade = jsonObject.get("idade").getAsInt();
-            System.out.println(id +" - " +tipo +" - " +nome +" - " +raca +" - " +idade +" ano(s)");
+            
+            Pet pet = new Pet(jsonObject.get("id").getAsLong(), 
+            				  jsonObject.get("tipo").getAsString(), 
+            				  jsonObject.get("nome").getAsString(), 
+            				  jsonObject.get("raca").getAsString(),
+            				  jsonObject.get("idade").getAsInt());
+            
+            System.out.println(pet.toString());
         }
     }
     @SuppressWarnings("resource")
@@ -67,17 +70,11 @@ public class PetService {
             int idade = Integer.parseInt(campos[3]);
             String cor = campos[4];
             Float peso = Float.parseFloat(campos[5]);
-
-            JsonObject json = new JsonObject();
-            json.addProperty("tipo", tipo.toUpperCase());
-            json.addProperty("nome", nome);
-            json.addProperty("raca", raca);
-            json.addProperty("idade", idade);
-            json.addProperty("cor", cor);
-            json.addProperty("peso", peso);
+            
+            Pet pet = new Pet(tipo.toUpperCase(), nome, raca, idade, cor, peso);
 
             String uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
-            HttpResponse<String> response = client.dispararRequisicaoPost(uri, json);
+            HttpResponse<String> response = client.dispararRequisicaoPost(uri, pet);
 
             int statusCode = response.statusCode();
             String responseBody = response.body();
