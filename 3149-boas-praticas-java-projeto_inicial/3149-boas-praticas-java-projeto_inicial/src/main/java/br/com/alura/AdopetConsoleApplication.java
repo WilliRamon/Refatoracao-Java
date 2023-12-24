@@ -23,8 +23,7 @@ public class AdopetConsoleApplication {
                 System.out.println("4 -> Importar pets do abrigo");
                 System.out.println("5 -> Sair");
 
-                Scanner in = new Scanner(System.in);
-				String textoDigitado = in.nextLine();
+                String textoDigitado = new Scanner(System.in).nextLine();
                 opcaoEscolhida = Integer.parseInt(textoDigitado);
 
                 if (opcaoEscolhida == 1) {
@@ -41,7 +40,6 @@ public class AdopetConsoleApplication {
                     System.out.println("NÚMERO INVÁLIDO!");
                     opcaoEscolhida = 0;
                 }
-                in.close();
             }
             System.out.println("Finalizando o programa...");
         } catch (Exception e) {

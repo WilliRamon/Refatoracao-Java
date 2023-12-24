@@ -4,12 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.alura.client.ClientHttpConfiguration;
 import br.com.alura.domain.Pet;
@@ -33,19 +32,11 @@ public class PetService {
             System.out.println("ID ou nome não cadastrado!");
         }
         String responseBody = response.body();
-        JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+        Pet[] pets = new ObjectMapper().readValue(responseBody, Pet[].class);
+        List<Pet> petList = Arrays.stream(pets).toList();
         System.out.println("Pets cadastrados:");
-        for (JsonElement element : jsonArray) {
-            JsonObject jsonObject = element.getAsJsonObject();
-            
-            Pet pet = new Pet(jsonObject.get("id").getAsLong(), 
-            				  jsonObject.get("tipo").getAsString(), 
-            				  jsonObject.get("nome").getAsString(), 
-            				  jsonObject.get("raca").getAsString(),
-            				  jsonObject.get("idade").getAsInt());
-            
-            System.out.println(pet.toString());
-        }
+        
+        petList.forEach(pet -> System.out.println(pet.toString()));
     }
     @SuppressWarnings("resource")
 	public void importarPetsDoAbrigo() throws NumberFormatException, IOException, InterruptedException {
