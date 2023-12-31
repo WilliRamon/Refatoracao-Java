@@ -44,7 +44,4 @@ public class AbrigoServiceTest {
 	        Assertions.assertEquals(expectedAbrigosCadastrados, actualAbrigosCadastrados);
 	        Assertions.assertEquals(expectedIdENome, actualIdENome);
 	}
-
-	
-	
 }
