@@ -54,6 +54,5 @@ public class Abrigo {
 	public Pet[] getPets() {
 		return pets;
 	}
-
 	
 }
