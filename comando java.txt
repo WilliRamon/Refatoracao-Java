@@ -1,0 +1,4 @@
+java -jar api.jar
+
+
+java -jar C:/Users/acdcr/Downloads/3149-boas-praticas-java-projeto_inicial/3149-boas-praticas-java-projeto_inicial/api.jar
